@@ -4,10 +4,23 @@
 # It is the starting point for TDD of a shell-based
 # test runner for C programs.
 
-output=$(./c_test prog1)
-if [[ "$output" == 'c_test ran prog1' ]]; then
-    echo 'PASSED: c_test ran prog1'
-else
-    echo 'FAILED'
-fi
+test_that_c_test_can_run_programs() {
+        
+        echo -e \\nRunning: c_test "$1"
+
+        local output=$(./c_test prog1)
+
+        if [[ "$output" == "c_test ran $1" ]]; then
+            echo -e "PASSED: $output\n"
+        else
+            echo -e "FAILED: $output\n"
+        fi
+}
+
+echo test_that_c_test_can_run_programs
+echo ---------------------------------
+programs=(prog1 prog2 prog3)
+for program in "${programs[@]}"; do
+        test_that_c_test_can_run_programs "$program"
+done
 
