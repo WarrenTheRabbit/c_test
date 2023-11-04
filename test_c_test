@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# This is the file test_c_test.
+# It is the starting point for TDD of a shell-based
+# test runner for C programs.
+
+output=$(./c_test prog1)
+if [[ "$output" == 'c_test ran prog1' ]]; then
+    echo 'PASSED: c_test ran prog1'
+else
+    echo 'FAILED'
+fi
+
