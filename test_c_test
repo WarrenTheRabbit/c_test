@@ -4,23 +4,112 @@
 # It is the starting point for TDD of a shell-based
 # test runner for C programs.
 
-test_that_c_test_can_run_programs() {
-        
-        echo -e \\nRunning: c_test "$1"
 
-        local output=$(./c_test prog1)
+test_pass_for_zero_argument_program() {
+	echo ++++++++++++++++++++++++++++++++++++++++++++++
+	echo test_pass_for_zero_argument_program
+	echo ++++++++++++++++++++++++++++++++++++++++++++++
 
-        if [[ "$output" == "c_test ran $1" ]]; then
-            echo -e "PASSED: $output\n"
-        else
-            echo -e "FAILED: $output\n"
-        fi
+	# Arrange.        
+	local expected_output=$(cat <<EOF
+Testing program1() == ./program1 is a C program
+PASS
+EOF
+)
+	# Act.
+        local output=$(./c_test "$@")
+
+	# Assert.
+	if [[ "$output" == "$expected_output" ]]; then
+		echo "Pass."
+	else
+		echo "Fail."
+		echo "********* Expected ***********"
+		echo "$expected_output"
+		echo "*********  Output ************"
+		echo "$output"
+	fi
 }
 
-echo test_that_c_test_can_run_programs
-echo ---------------------------------
-programs=(prog1 prog2 prog3)
-for program in "${programs[@]}"; do
-        test_that_c_test_can_run_programs "$program"
-done
 
+test_pass_for_multi_argument_program() {
+	echo ++++++++++++++++++++++++++++++++++++++++++++++
+	echo test_pass_for_multi_argument_program
+	echo ++++++++++++++++++++++++++++++++++++++++++++++
+
+	# Arrange.
+ 	local expected_output=$(cat <<EOF
+Testing mul(2 3) == 6
+PASS
+EOF
+)	
+	# Act.
+	local output=$(./c_test "$@")
+
+	# Assert.
+	if [[ "$output" == "$expected_output" ]]; then
+		echo "    Pass."
+        else
+                echo "    Fail."
+                echo "    ********* Expected ***********"
+                echo "    $expected_output"
+                echo "    *********  Output ************"
+                echo "    $output"
+	fi
+}
+
+test_fail_for_zero_argument_program() {
+	echo ++++++++++++++++++++++++++++++++++++++++++++++
+	echo test_pass_for_zero_argument_program
+	echo ++++++++++++++++++++++++++++++++++++++++++++++
+
+	# Arrange.        
+	local expected_output=$(cat <<EOF
+Testing program1() == ./program1 is a C program
+PASS
+EOF
+)
+	# Act.
+        local output=$(./c_test "$@")
+
+	# Assert.
+	if [[ "$output" == "$expected_output" ]]; then
+		echo "    Pass."
+	else
+		echo "    Fail."
+		echo "    ********* Expected ***********"
+		echo "    $expected_output"
+		echo "    *********  Output ************"
+		echo "    $output"
+	fi
+}
+
+
+test_fail_for_multi_argument_program() {
+	echo ++++++++++++++++++++++++++++++++++++++++++++++
+	echo test_pass_for_multi_argument_program
+	echo ++++++++++++++++++++++++++++++++++++++++++++++
+
+	# Arrange.
+ 	local expected_output=$(cat <<EOF
+Testing mul(2 3) == 6
+PASS
+EOF
+)	
+	# Act.
+	local output=$(./c_test "$@")
+
+	# Assert.
+	if [[ "$output" == "$expected_output" ]]; then
+		echo "    Pass."
+        else
+                echo "    Fail."
+                echo "    ********* Expected ***********"
+                echo "    $expected_output"
+                echo "    *********  Output ************"
+                echo "    $output"
+	fi
+}
+test_fail_for_multi_argument_program mul 2 3 7
+echo 
+test_fail_for_zero_argument_program program2 './program1 is a C program'
