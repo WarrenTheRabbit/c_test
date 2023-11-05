@@ -1,0 +1,7 @@
+#!/bin/bash
+
+source assert.sh
+echo --------------------------
+assert 'hello' == 'goodbye'
+echo --------------------------
+assert 'hello' == 'hello'
