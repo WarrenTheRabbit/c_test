@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# A test should be provided with 1) a program to test and b)
+# its expected output.
+if [ "$#" -lt 2 ]; then
+    echo "Usage: $0 program [arg1 arg2 ...] expected_output"
+    exit 1
+fi
+
+# Arrange.
+program=$1
+args=("${@:2:$#-2}")
+expected_output="${@: -1}"
+
+# Act.
+echo "Testing $program(${args[@]}) == $expected_output"
+output=$(./"$program" "${args[@]}")
+
+# Assert.
+if [[ "$output" == "$expected_output" ]]; then
+    echo "PASS"
+else
+    echo "FAIL"
+    echo "--------output----------"
+    echo "$output"
+    echo "-------expected---------"
+    echo "$expected_output"
+fi
