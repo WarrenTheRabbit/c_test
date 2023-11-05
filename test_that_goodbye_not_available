@@ -1,0 +1,12 @@
+#!/bin/bash
+
+source utility.sh
+
+output=$(goodbye)
+
+if [[ "$output" == "goodbye" ]]; then
+    echo "Pass."
+else
+    echo "Fail."
+fi
+
