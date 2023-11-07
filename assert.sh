@@ -2,7 +2,7 @@
 
 
 assert() {
-	compare_output $1 $3
+	compare_output "$1" "$3"
 }
 
 
